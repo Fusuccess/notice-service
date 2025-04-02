@@ -1,0 +1,14 @@
+{
+  "code_version": "1.0.0",
+  "properties_version": "1.0.0",
+  "code_info": "消息推送器",
+  "code_author": "Fusuccess",
+  "content": "具有钉钉推送功能",
+  "properties": {
+    "dingtalk": {
+      "label": "钉钉机器人消息推送",
+      "custom_robot_token": "token",
+      "secret": "secret"
+    }
+  }
+}

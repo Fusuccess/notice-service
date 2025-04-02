@@ -19,12 +19,12 @@ public class DingTalkImpl {
     public static final String CUSTOM_ROBOT_TOKEN = "b481f0fad8d29d4360499b0675049d9bb3c6ca13c9349d1850f0ab6ba65d56a5";
     public static final String SECRET = "SECde4866b6ba992eac729644554d5e384a43e488f4a126f1f7538a858f64201338";
 
-    public void sendMessage(String content, String userIds) {
+    public void sendMessage(DingTalk dingTalk, String content, String userIds) {
         try {
-            DingTalkClient client = createClient();
+            DingTalkClient client = createClient(dingTalk);
             OapiRobotSendRequest.At at = setUserIds(userIds);
             OapiRobotSendRequest req = setContent(at, content);
-            OapiRobotSendResponse rsp = client.execute(req, CUSTOM_ROBOT_TOKEN);
+            OapiRobotSendResponse rsp = client.execute(req, dingTalk.getCustom_robot_token());
             System.out.println(rsp.getBody());
         } catch (ApiException e) {
             throw new RuntimeException(e);
@@ -47,21 +47,23 @@ public class DingTalkImpl {
         OapiRobotSendRequest.At at = new OapiRobotSendRequest.At();
         at.setAtUserIds(Arrays.asList(userIds));
         return at;
-    };
+    }
 
-    public DingTalkClient createClient() {
+    ;
+
+    public DingTalkClient createClient(DingTalk dingTalk) {
         try {
-        Long timestamp = System.currentTimeMillis();
-        System.out.println(timestamp);
-        String secret = SECRET;
-        String stringToSign = timestamp + "\n" + secret;
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(new SecretKeySpec(secret.getBytes("UTF-8"), "HmacSHA256"));
-        byte[] signData = mac.doFinal(stringToSign.getBytes("UTF-8"));
-        String sign = URLEncoder.encode(new String(Base64.encodeBase64(signData)),"UTF-8");
-        System.out.println(sign);
-        //sign字段和timestamp字段必须拼接到请求URL上，否则会出现 310000 的错误信息
-        return new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?sign="+sign+"&timestamp="+timestamp);
+            Long timestamp = System.currentTimeMillis();
+            System.out.println(timestamp);
+            String secret = dingTalk.getSecret();
+            String stringToSign = timestamp + "\n" + secret;
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(new SecretKeySpec(secret.getBytes("UTF-8"), "HmacSHA256"));
+            byte[] signData = mac.doFinal(stringToSign.getBytes("UTF-8"));
+            String sign = URLEncoder.encode(new String(Base64.encodeBase64(signData)), "UTF-8");
+//        System.out.println(sign); // 输出签名结果
+            //sign字段和timestamp字段必须拼接到请求URL上，否则会出现 310000 的错误信息
+            return new DefaultDingTalkClient("https://oapi.dingtalk.com/robot/send?sign=" + sign + "&timestamp=" + timestamp);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {

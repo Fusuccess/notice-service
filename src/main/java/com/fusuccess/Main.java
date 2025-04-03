@@ -1,21 +1,24 @@
 package com.fusuccess;
 
-import com.fusuccess.common.NoticeConfigLoader;
+import com.fusuccess.common.ConfigLoader;
 import com.fusuccess.config.AppConfig;
 import com.fusuccess.module.notice.config.NoticeConfig;
 import com.fusuccess.module.notice.impl.dingtalk.DingTalkImpl;
 import com.fusuccess.module.notice.strategy.NoticeClient;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class Main {
 
 
+
     public static void main(String[] args) {
 
         try {
-            String path = "/Users/a1234/WorkSpace/ideaPorject/dingtalk/src/main/resources/properties.json";
-            AppConfig appConfig = NoticeConfigLoader.loadConfig(path);
+            String path = "/Users/a1234/Documents/properties/properties.json";
+            AppConfig appConfig = ConfigLoader.loadConfig(path);
             NoticeConfig config = appConfig.getUserPush();
 
             // 创建推送上下文

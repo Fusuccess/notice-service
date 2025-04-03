@@ -4,6 +4,8 @@ public class DingTalk {
     private String label;
     private String custom_robot_token;
     private String secret;
+    private String message;
+    private String userIds;
 
     public void setLabel(String label) {
         this.label = label;
@@ -27,5 +29,17 @@ public class DingTalk {
 
     public String getSecret() {
         return secret;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    public String getMessage() {
+        return message;
+    }
+    public void setUserIds(String userIds) {
+        this.userIds = userIds;
+    }
+    public String getUserIds() {
+        return userIds;
     }
 }

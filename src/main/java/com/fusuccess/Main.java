@@ -1,25 +1,10 @@
 package com.fusuccess;
-import com.dingtalk.api.DefaultDingTalkClient;
-import com.dingtalk.api.DingTalkClient;
-import com.dingtalk.api.request.OapiRobotSendRequest;
-import com.dingtalk.api.response.OapiRobotSendResponse;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fusuccess.common.PropertiesInit;
 import com.fusuccess.dingtalk.DingTalk;
 import com.fusuccess.dingtalk.DingTalkImpl;
-import com.taobao.api.ApiException;
-import org.apache.commons.codec.binary.Base64;
+import com.fusuccess.strategy.PushClient;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Map;
 
 public class Main {
@@ -28,16 +13,35 @@ public class Main {
 
     public static void main(String[] args) {
         PropertiesInit propertiesInit = new PropertiesInit();
-        args = new String[]{"dingtalk"};
-        String arg = args[0];
-       if (arg == null || arg.isEmpty()) {
-           System.out.println("参数为空");
-           return;
-       }else if(arg.equals("dingtalk")) {
-           DingTalk dingTalk = new DingTalk();
-           propertiesInit.getProperties(dingTalk);
-           new DingTalkImpl().sendMessage(dingTalk, "钉钉，让进步发生", "");
-       }
+        Map<String, String> propertiesInfo = propertiesInit.getProperties();
+        if (propertiesInfo == null) {
+            System.err.println("无法获取属性信息");
+            return;
+        }
+        // 创建推送上下文
+        PushClient pushClient = new PushClient();
+
+        // 用户选择推送方式 - 这里可以通过配置或用户输入决定
+        String pushType = "dingTalk";
+
+        // 根据选择设置策略
+        switch (pushType) {
+            case "dingTalk":
+                pushClient.setPushStrategy(new DingTalkImpl());
+                break;
+            case "sms":
+//                pushClient.setPushStrategy(new SmsPushStrategy());
+                break;
+            case "email":
+//                pushClient.setPushStrategy(new EmailPushStrategy());
+                break;
+            default:
+                throw new IllegalArgumentException("不支持的推送类型: " + pushType);
+        }
+
+        // 执行推送
+        boolean result = pushClient.executePush("这是一条测试消息", propertiesInfo);
+        System.out.println("推送结果: " + (result ? "成功" : "失败"));
     }
 
 }

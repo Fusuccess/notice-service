@@ -1,12 +1,12 @@
-package com.fusuccess.dingtalk;
+package com.fusuccess.module.notice.impl.dingtalk;
 
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.dingtalk.api.response.OapiRobotSendResponse;
-import com.fusuccess.config.DingTalkConfig;
-import com.fusuccess.config.UserPushConfig;
-import com.fusuccess.strategy.PushStrategy;
+import com.fusuccess.module.notice.config.DingTalkConfig;
+import com.fusuccess.module.notice.config.NoticeConfig;
+import com.fusuccess.module.notice.strategy.NoticeStrategy;
 import com.taobao.api.ApiException;
 import org.apache.commons.codec.binary.Base64;
 
@@ -18,7 +18,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class DingTalkImpl implements PushStrategy {
+public class DingTalkImpl implements NoticeStrategy {
 
     /**
      * 实现 PushStrategy 接口的 push 方法，用于向钉钉机器人推送消息。
@@ -27,7 +27,7 @@ public class DingTalkImpl implements PushStrategy {
      * @return 如果消息推送成功，返回 true；否则抛出异常
      */
     @Override
-    public boolean push(String message, UserPushConfig config) {
+    public boolean push(String message, NoticeConfig config) {
         if (config == null || config.getDingtalk() == null) {
             return false;
         }

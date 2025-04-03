@@ -1,6 +1,6 @@
-package com.fusuccess.config;
+package com.fusuccess.module.notice.config;
 
-public class UserPushConfig {
+public class NoticeConfig {
     private String label;
     private DingTalkConfig dingtalk;
 

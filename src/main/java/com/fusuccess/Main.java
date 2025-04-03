@@ -1,10 +1,10 @@
 package com.fusuccess;
 
-import com.fusuccess.common.PushConfigLoader;
+import com.fusuccess.common.NoticeConfigLoader;
 import com.fusuccess.config.AppConfig;
-import com.fusuccess.config.UserPushConfig;
-import com.fusuccess.dingtalk.DingTalkImpl;
-import com.fusuccess.strategy.PushClient;
+import com.fusuccess.module.notice.config.NoticeConfig;
+import com.fusuccess.module.notice.impl.dingtalk.DingTalkImpl;
+import com.fusuccess.module.notice.strategy.NoticeClient;
 
 import java.io.IOException;
 
@@ -14,19 +14,19 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            String path = "/Users/a1234/WorkSpace/ideaProject/dingtalk/src/main/resources/properties.json";
-            AppConfig appConfig = PushConfigLoader.loadConfig(path);
-            UserPushConfig config = appConfig.getUserPush();
+            String path = "/Users/a1234/WorkSpace/ideaPorject/dingtalk/src/main/resources/properties.json";
+            AppConfig appConfig = NoticeConfigLoader.loadConfig(path);
+            NoticeConfig config = appConfig.getUserPush();
 
             // 创建推送上下文
-            PushClient pushClient = new PushClient();
+            NoticeClient noticeClient = new NoticeClient();
 
             // 根据用户选择设置策略
-            String pushType = "dingTalk"; // 可以从配置或用户输入获取
+            String pushType = args[0]; // 可以从配置或用户输入获取
             // 根据选择设置策略
             switch (pushType) {
                 case "dingTalk":
-                    pushClient.setPushStrategy(new DingTalkImpl());
+                    noticeClient.setPushStrategy(new DingTalkImpl());
                     break;
                 case "sms":
 //                pushClient.setPushStrategy(new SmsPushStrategy());
@@ -39,7 +39,7 @@ public class Main {
             }
 
             // 执行推送
-            boolean result = pushClient.executePush("这是一条测试消息", config);
+            boolean result = noticeClient.executePush("这是一条测试消息", config);
             System.out.println("推送结果: " + (result ? "成功" : "失败"));
 
         } catch (IOException e) {

@@ -2,11 +2,11 @@
   "code_version": "1.0.0",
   "properties_version": "1.0.0",
   "code_author": "Fusuccess",
-  "UserPush": {
-    "label": "用户推送配置",
+  "noticeConfig": {
+    "label": "消息推送配置",
     "dingtalk": {
-      "customRobotToken": "b481f0fad8d29d4360499b0675049d9bb3c6ca13c9349d1850f0ab6ba65d56a5",
-      "secret": "SECde4866b6ba992eac729644554d5e384a43e488f4a126f1f7538a858f64201338"
+      "customRobotToken": "token",
+      "secret": "secret"
     }
   }
 }

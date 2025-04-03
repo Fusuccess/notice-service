@@ -1,5 +1,7 @@
 package com.fusuccess.strategy;
 
+import com.fusuccess.config.UserPushConfig;
+
 import java.util.Map;
 
 public class PushClient {
@@ -10,10 +12,10 @@ public class PushClient {
     }
 
     // 执行推送
-    public boolean executePush(String message, Map<String, String> info) {
+    public boolean executePush(String message, UserPushConfig config) {
         if (pushStrategy == null) {
             throw new IllegalStateException("推送策略未设置");
         }
-        return pushStrategy.push(message, info);
+        return pushStrategy.push(message, config);
     }
 }

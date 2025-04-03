@@ -4,6 +4,8 @@ import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.dingtalk.api.response.OapiRobotSendResponse;
+import com.fusuccess.config.DingTalkConfig;
+import com.fusuccess.config.UserPushConfig;
 import com.fusuccess.strategy.PushStrategy;
 import com.taobao.api.ApiException;
 import org.apache.commons.codec.binary.Base64;
@@ -15,7 +17,6 @@ import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Map;
 
 public class DingTalkImpl implements PushStrategy {
 
@@ -23,26 +24,26 @@ public class DingTalkImpl implements PushStrategy {
      * 实现 PushStrategy 接口的 push 方法，用于向钉钉机器人推送消息。
      *
      * @param message 要推送的消息内容
-     * @param info    包含推送所需信息的映射，如 secret、custom_robot_token 和 userIds
      * @return 如果消息推送成功，返回 true；否则抛出异常
      */
     @Override
-    public boolean push(String message, Map<String, String> info) {
-        // 从 info 映射中获取 secret 信息
-        String secret = info.get("secret");
-        // 从 info 映射中获取自定义机器人的 token
-        String customRobotToken = info.get("custom_robot_token");
-        // 从 info 映射中获取需要 @ 的用户 ID 字符串
-        String userIds = info.get("userIds");
+    public boolean push(String message, UserPushConfig config) {
+        if (config == null || config.getDingtalk() == null) {
+            return false;
+        }
+
+        // 获取钉钉机器人的配置信息
+        DingTalkConfig dingtalk = config.getDingtalk();
+
         try {
             // 创建钉钉客户端，该客户端会根据传入的 secret 生成签名和时间戳
-            DingTalkClient client = createClient(secret);
+            DingTalkClient client = createClient(dingtalk.getSecret());
             // 设置要 @ 的用户 ID
-            OapiRobotSendRequest.At at = setUserIds(userIds);
+            OapiRobotSendRequest.At at = setUserIds(dingtalk.getUserIds());
             // 设置钉钉机器人发送消息的内容和相关信息
             OapiRobotSendRequest req = setContent(at, message);
             // 执行发送请求，使用钉钉机器人的自定义 token
-            OapiRobotSendResponse rsp = client.execute(req, customRobotToken);
+            OapiRobotSendResponse rsp = client.execute(req, dingtalk.getCustomRobotToken());
             // 打印响应体内容
             System.out.println(rsp.getBody());
         } catch (ApiException e) {

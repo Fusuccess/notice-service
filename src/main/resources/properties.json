@@ -7,6 +7,16 @@
     "dingtalk": {
       "customRobotToken": "token",
       "secret": "secret"
+    },
+    "emailConfig":{
+      "host": "smtp.163.com",
+      "port": 456,
+      "username":"xxx@163.com",
+      "password":"xxx",
+      "ssl": true,
+      "from":"xxx@163.com",
+      "to":"xxx@qq.com",
+      "templateType":"text"
     }
   }
 }

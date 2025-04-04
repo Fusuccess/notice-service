@@ -4,6 +4,7 @@ import com.fusuccess.common.ConfigLoader;
 import com.fusuccess.config.AppConfig;
 import com.fusuccess.module.notice.config.NoticeConfig;
 import com.fusuccess.module.notice.impl.dingtalk.DingTalkImpl;
+import com.fusuccess.module.notice.impl.email.EmailImpl;
 import com.fusuccess.module.notice.strategy.NoticeClient;
 import com.fusuccess.untils.DateUtils;
 import org.apache.log4j.LogManager;
@@ -22,8 +23,8 @@ public class Main {
             logger.info("执行推送: "+ Arrays.toString(args));
 
             if (args.length < 2) {
-                logger.error("缺少推送类型或推送内容");
-                throw new IllegalArgumentException("缺少推送类型或推送内容");
+                logger.error("缺少推送类型或推送内容 [pushType, message] 例如: [dingTalk, 测试消息]");
+                return;
             }
 
             // 根据用户选择设置策略
@@ -45,10 +46,7 @@ public class Main {
 
             // 创建推送上下文
             NoticeClient noticeClient = new NoticeClient();
-
-
             logger.info("推送类型: " + (pushType.equals("dingTalk")? "钉钉" : (pushType.equals("sms")? "短信" : "邮箱")));
-
             // 根据选择设置策略
             switch (pushType) {
                 case "dingTalk":
@@ -58,7 +56,7 @@ public class Main {
 //                pushClient.setPushStrategy(new SmsPushStrategy());
                     break;
                 case "email":
-//                pushClient.setPushStrategy(new EmailPushStrategy());
+                    noticeClient.setPushStrategy(new EmailImpl());
                     break;
                 default:
                     logger.error("不支持的推送类型: " + pushType);

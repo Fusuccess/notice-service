@@ -29,9 +29,11 @@
 git clone https://github.com/fusuccess/notice-service.git
 # 2. 进入项目目录
 cd notice-service
-# 3. 编译项目
+# 3. 选择jar版本源码
+git checkout JAR/main
+# 4. 编译项目
 mvn clean package
-# 4. 运行项目
+# 5. 运行项目
 java -jar target/notice-service-1.0.0.jar
 ```
 
@@ -39,9 +41,21 @@ java -jar target/notice-service-1.0.0.jar
 
 | 推送类型 | 执行步骤                                                                                 |
 | -------- | ---------------------------------------------------------------------------------------- |
-| 钉钉     | ![imgage](https://github.com/user-attachments/assets/7f2bda08-8476-4276-9b86-bfbea56eb836) |
+| 钉钉     | ![run jar](https://github.com/user-attachments/assets/a57ed8b4-38b0-404e-aed5-9dc4d534925f) |
 
 ## 📦 环境安装(API版)
+```shell
+# 1. 克隆项目
+git clone https://github.com/fusuccess/notice-service.git
+# 2. 进入项目目录
+cd notice-service
+# 3. 选择API版本源码
+git checkout Spring/main
+# 4. 导入项目至IDEA并运行
+```
+
+## 🐣运行示例
+<img width="472" alt="image" src="https://github.com/user-attachments/assets/26f4fc6b-e84d-4620-9856-8c9bc44e22de" />
 
 
 

@@ -40,7 +40,7 @@ public class Main {
                 throw new IllegalArgumentException("推送内容不能为空");
             }
 
-            String path = "/Users/a1234/Documents/properties/properties.json";
+            String path = "/Users/a1234/Documents/properties/config.json";
             AppConfig appConfig = ConfigLoader.loadConfig(path);
             NoticeConfig config = appConfig.getUserPush();
 

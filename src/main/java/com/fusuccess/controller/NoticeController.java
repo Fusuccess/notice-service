@@ -27,7 +27,7 @@ public class NoticeController {
                                        @RequestParam String message) {
         try {
             // 加载配置
-            String path = "/Users/a1234/Documents/properties/properties.json";
+            String path = "/app/config/config.json";
             AppConfig appConfig = ConfigLoader.loadConfig(path);
             NoticeConfig config = appConfig.getUserPush();
 

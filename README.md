@@ -19,20 +19,22 @@
 
 ## 📋 功能列表
 - [x] 钉钉推送
+- [x] 邮箱推送
 
-
-## 📦 环境安装
+## 📦 环境部署
+### Docker部署
 ```shell
-# 1. 克隆项目
-git clone https://github.com/fusuccess/notice-service.git
-# 2. 进入项目目录
-cd notice-service
-# 3. 编译项目
-mvn clean package
-# 4. 运行项目
-java -jar target/notice-service-1.0.0.jar
+# 拉取代码
+git clone xxxxxxx.git
+# 进入项目目录
+cd notice
+# 编译项目
+mvn clean package -DskipTests
+# 构建镜像
+docker compose build
+# 启动容器
+docker compose up -d
 ```
-
 
 ## 🐣运行示例
 
@@ -43,12 +45,12 @@ java -jar target/notice-service-1.0.0.jar
 
 ## 📝计划任务
 ### 功能列表
-- [ ] 邮箱推送
+
 - [ ] 短信推送
 
 ### 运行方式
 - [ ] 定时任务
-- [ ] docker部署
+- [x] docker部署
 
 
 ## 🌲代码结构树

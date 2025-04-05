@@ -1,0 +1,22 @@
+{
+  "code_version": "1.0.0",
+  "properties_version": "1.0.0",
+  "code_author": "Fusuccess",
+  "noticeConfig": {
+    "label": "消息推送配置",
+    "dingtalk": {
+      "customRobotToken": "b481f0fad8d29d4360499b0675049d9bb3c6ca13c9349d1850f0ab6ba65d56a5",
+      "secret": "SECde4866b6ba992eac729644554d5e384a43e488f4a126f1f7538a858f64201338"
+    },
+    "emailConfig":{
+      "host": "smtp.163.com",
+      "port": 465,
+      "username":"zhangtao_01886@163.com",
+      "password":"UUsb8V3WQFqmHtdH",
+      "ssl": true,
+      "from":"zhangtao_01886@163.com",
+      "to":"fuc888@88.com",
+      "templateType":"text"
+    }
+  }
+}
